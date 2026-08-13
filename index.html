@@ -1,83 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head> <meta name="google-site-verification" content="DSq4sRb0o7NFxgXbGjTNKdaFHEzGfJ2gMzA7sQBCnOI" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Shri Panchanan Pvt Ltd - Odisha based bulk supplier of rice, chilli, cashew, peanuts, turmeric and ginger.">
-<title>Shri Panchanan Pvt Ltd | Odisha Bulk Agro Products</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;color:#1d2a22;background:#f7faf7;line-height:1.6}
-header{background:#123d2a;color:#fff;position:sticky;top:0;z-index:10}
-.nav{max-width:1100px;margin:auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:21px;font-weight:800}.nav a{color:#fff;text-decoration:none;margin-left:18px;font-size:14px}
-.hero{background:linear-gradient(135deg,#123d2a,#2d6a4f);color:#fff;padding:80px 20px}
-.wrap{max-width:1100px;margin:auto}.hero h1{font-size:42px;line-height:1.1;margin-bottom:15px}.hero p{max-width:650px;font-size:18px}
-.btn{display:inline-block;margin-top:25px;background:#f4c542;color:#16251d;text-decoration:none;font-weight:800;padding:13px 20px;border-radius:8px}
-section{padding:60px 20px}.title{text-align:center;margin-bottom:35px}.title h2{font-size:30px;color:#123d2a}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card{background:#fff;border:1px solid #e0e8e2;border-radius:14px;padding:25px;box-shadow:0 5px 18px rgba(0,0,0,.05)}
-.card .icon{font-size:38px}.card h3{margin:8px 0;color:#123d2a}
-.about{background:#eaf3ed}.contact{background:#123d2a;color:#fff}.contact h2{color:#fff}
-.info{margin:10px 0}.small{font-size:13px;opacity:.85}
-footer{background:#0c291c;color:#fff;text-align:center;padding:20px;font-size:13px}
-@media(max-width:700px){.nav{display:block}.nav a{display:inline-block;margin:10px 8px 0 0}.hero h1{font-size:32px}}
-</style>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f7a3d">
+<meta name="description" content="Shri Panchanan Pvt Ltd - B2B food products">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<title>Shri Panchanan Pvt Ltd</title>
 </head>
 <body>
-<header>
-  <div class="nav">
-    <div class="logo">Shri Panchanan Pvt Ltd</div>
-    <nav><a href="#products">Products</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
-  </div>
+<header class="topbar">
+  <div class="brand"><div class="logo">SP</div><div><b>Shri Panchanan</b><small>Pvt Ltd • Odisha</small></div></div>
+  <button id="installBtn" class="install" hidden>Install App</button>
 </header>
 
 <main>
 <section class="hero">
-  <div class="wrap">
-    <p><strong>ODISHA • BULK AGRICULTURAL SUPPLY</strong></p>
-    <h1>Reliable sourcing from Odisha for bulk buyers.</h1>
-    <p>We arrange agricultural commodities from Odisha for wholesalers, traders, processors and bulk buyers across India.</p>
-    <a class="btn" href="https://wa.me/917756039746?text=Hello%20Shri%20Panchanan%20Pvt%20Ltd%2C%20I%20am%20interested%20in%20bulk%20agricultural%20products." target="_blank">WhatsApp for Bulk Inquiry</a>
+  <span class="pill">B2B • Wholesale • Supply</span>
+  <h1>Quality food products from Odisha.</h1>
+  <p>Bulk supply of spices, flour and rice for retailers, wholesalers and business buyers.</p>
+  <div class="actions">
+    <a class="btn primary" href="#products">View Products</a>
+    <a class="btn ghost" id="heroWhatsApp">WhatsApp</a>
   </div>
 </section>
 
-<section id="products">
-  <div class="wrap">
-    <div class="title"><h2>Our Products</h2><p>Bulk sourcing subject to availability, quality and buyer requirements.</p></div>
-    <div class="grid">
-      <div class="card"><div class="icon">🍚</div><h3>Rice</h3><p>Bulk rice sourcing from Odisha.</p></div>
-      <div class="card"><div class="icon">🌶️</div><h3>Chilli</h3><p>Dry chilli and agricultural chilli sourcing.</p></div>
-      <div class="card"><div class="icon">🥜</div><h3>Cashew</h3><p>Cashew sourcing for wholesale requirements.</p></div>
-      <div class="card"><div class="icon">🥜</div><h3>Peanuts</h3><p>Bulk peanut sourcing as per requirement.</p></div>
-      <div class="card"><div class="icon">🟡</div><h3>Turmeric</h3><p>Turmeric sourcing from Odisha suppliers.</p></div>
-      <div class="card"><div class="icon">🫚</div><h3>Ginger</h3><p>Fresh ginger sourcing subject to season and availability.</p></div>
-    </div>
-  </div>
+<section id="products" class="section">
+  <div class="section-head"><h2>Products</h2><span>Bulk orders welcome</span></div>
+  <div id="productGrid" class="grid"></div>
 </section>
 
-<section id="about" class="about">
-  <div class="wrap">
-    <div class="title"><h2>About Shri Panchanan Pvt Ltd</h2></div>
-    <p>Shri Panchanan Pvt Ltd is an Odisha-based business focused on sourcing and supplying agricultural and food products for bulk buyers. We aim to connect reliable Odisha suppliers with buyers looking for competitive bulk procurement.</p>
-    <br>
-    <p><strong>Bulk buyers:</strong> Send your product, quantity, quality specification and delivery location. We will check sourcing availability and respond with a quotation.</p>
+<section class="order section">
+  <div>
+    <span class="pill">B2B Inquiry</span>
+    <h2>Need a bulk quotation?</h2>
+    <p>Send your product, quantity and buyer details. We’ll prepare the inquiry message for WhatsApp.</p>
   </div>
+  <form id="orderForm">
+    <input id="buyer" placeholder="Your name / company" required>
+    <input id="phone" placeholder="Phone / WhatsApp number" required>
+    <select id="product"></select>
+    <input id="qty" placeholder="Quantity (e.g. 500 kg)" required>
+    <textarea id="note" placeholder="Additional requirements"></textarea>
+    <button class="btn primary" type="submit">Send B2B Inquiry on WhatsApp</button>
+  </form>
 </section>
 
-<section id="contact" class="contact">
-  <div class="wrap">
-    <div class="title"><h2>Contact & Bulk Buyer Inquiry</h2></div>
-    <div class="info">📞 <strong>Phone / WhatsApp:</strong> 7756039746</div>
-    <div class="info">📍 <strong>Address:</strong> Thakurani Sahi, 1st Floor, Sethi House, Badakodonda, Bhanjanagar, Odisha – 761125</div>
-    <div class="info">🧾 <strong>GSTIN:</strong> 21RHAPS6567N1ZF</div>
-    <a class="btn" href="https://wa.me/917756039746?text=Hello%20Shri%20Panchanan%20Pvt%20Ltd%2C%20my%20bulk%20requirement%20is%3A%0AProduct%3A%0AQuantity%3A%0AQuality%2FGrade%3A%0ADelivery%20Location%3A" target="_blank">Send Your Requirement on WhatsApp</a>
-    <p class="small" style="margin-top:20px">Please confirm current availability, quality, price, transport and payment terms before placing an order.</p>
+<section class="section about">
+  <span class="pill">Company</span>
+  <h2>Shri Panchanan Pvt Ltd</h2>
+  <p>Manufacturing & food products business based in Odisha, focused on professional B2B supply and buyer partnerships.</p>
+  <div class="contact">
+    <a href="mailto:shripanchananpvtltt@gmail.com">✉ shripanchananpvtltt@gmail.com</a>
+    <a href="tel:+917756039746">☎ +91 77560 39746</a>
   </div>
 </section>
 </main>
 
-<footer>© 2026 Shri Panchanan Pvt Ltd. All rights reserved.</footer>
+<footer>© 2026 Shri Panchanan Pvt Ltd • B2B Business App</footer>
+<script src="app.js"></script>
+<script>
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
 </body>
 </html>
-
