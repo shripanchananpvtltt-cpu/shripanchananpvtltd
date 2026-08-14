@@ -1,117 +1,55 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#123b2a">
-  <meta name="description" content="Shri Panchanan Pvt Ltd — premium food products and home delivery.">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
-  <title>Shri Panchanan Pvt Ltd</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shri Panchanan Pvt Ltd | V4</title>
+<meta name="description" content="Shri Panchanan Pvt Ltd - Spices, flour and rice.">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <button class="icon-btn" id="menuBtn" aria-label="Open menu">☰</button>
-    <div class="brand"><span class="brand-mark">SP</span><div><b>Shri Panchanan</b><small>Pvt Ltd</small></div></div>
-    <button class="cart-btn" id="cartBtn" aria-label="Cart">🛒 <span id="cartCount">0</span></button>
-  </header>
+<header class="top">
+  <div class="brand"><span class="logo">SP</span><div><b>Shri Panchanan</b><small>Pvt Ltd</small></div></div>
+  <nav><a href="#home">Home</a><a href="#products">Products</a><a href="#orders">My Orders</a><a href="#contact">Contact</a></nav>
+  <button class="cartBtn" onclick="openCart()">🛒 Cart <span id="cartCount">0</span></button>
+</header>
 
-  <aside class="drawer" id="drawer">
-    <div class="drawer-head"><b>Shri Panchanan</b><button class="icon-btn" id="closeMenu">×</button></div>
-    <button data-scroll="home">Home</button><button data-scroll="products">Products</button>
-    <button data-scroll="orders">My Orders</button><button data-scroll="contact">Contact</button>
-  </aside>
-  <div class="scrim" id="scrim"></div>
+<main>
+<section id="home" class="hero">
+  <div><span class="pill">QUALITY • TRUST • DELIVERY</span><h1>Shop quality products<br>delivered to your door.</h1>
+  <p>Premium spices, flour and rice with convenient home delivery.</p>
+  <button class="primary" onclick="document.querySelector('#products').scrollIntoView({behavior:'smooth'})">Shop Now →</button></div>
+  <div class="heroCard"><div class="heroEmoji">🌾</div><b>Fresh • Carefully packed</b><span>Direct order from Shri Panchanan Pvt Ltd</span></div>
+</section>
 
-  <main id="home">
-<section class="pro-hero"><div><span>SHRI PANCHANAN PVT LTD</span><h1>Shop quality products<br><em>delivered to your door.</em></h1><p>Spices, flour and rice with convenient home delivery.</p><button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now →</button></div><img src="assets/shop.png" alt="Shri Panchanan shop"></section>
-    <section class="hero">
-      <div><span class="eyebrow">SHRI PANCHANAN PVT LTD • QUALITY • TRUST • DELIVERY</span>
-        <h1>Authentic products, <em>delivered home.</em></h1>
-        <p>Shop premium spices, flour and rice from Shri Panchanan Pvt Ltd.</p>
-        <button class="primary" data-scroll="products">Shop Now →</button>
-      </div>
-      <div class="hero-card shop-hero"><img src="assets/shop.png" alt="Shri Panchanan Pvt Ltd shop"><div><span>Our Shop</span><strong>Shri Panchanan Pvt Ltd</strong><small>Bhanjanagar, Badakodonda</small></div></div>
-    </section>
+<section class="features"><div>🚚<b>Home Delivery</b><span>Doorstep service</span></div><div>🔒<b>Secure Checkout</b><span>Safe order process</span></div><div>📦<b>Quality Products</b><span>Carefully packed</span></div></section>
 
-    <section class="features">
-      <div>🚚<b>Home Delivery</b><small>Convenient doorstep service</small></div>
-      <div>🔒<b>Secure Checkout</b><small>Safe payment options</small></div>
-      <div>📦<b>Quality Products</b><small>Carefully packed</small></div>
-    </section>
+<section id="products" class="section">
+<h2>Our Products</h2><p class="muted">Choose your product and add it to your cart.</p>
+<div class="tools"><input id="search" placeholder="🔎 Search products..." oninput="renderProducts()"><div class="chips"><button class="active" onclick="setCat('All',this)">All</button><button onclick="setCat('Spices',this)">Spices</button><button onclick="setCat('Flour',this)">Flour</button><button onclick="setCat('Rice',this)">Rice</button></div></div>
+<div id="productGrid" class="grid"></div>
+</section>
 
-    <section class="section" id="products">
-<div class="pro-search"><input id="search" placeholder="🔎 Search products"></div>
-      <div class="section-title"><div><span class="eyebrow">OUR CATALOG</span><h2>Shop Products</h2></div>
-      <input id="search" class="search" placeholder="Search products…" autocomplete="off"></div>
-      <div class="chips" id="chips">
-        <button class="chip active" data-cat="All">All</button><button class="chip" data-cat="Spices">Spices</button>
-        <button class="chip" data-cat="Flour">Flour</button><button class="chip" data-cat="Rice">Rice</button>
-      </div>
-      <div class="grid" id="productGrid"></div>
-    </section>
+<section id="orders" class="section">
+<h2>My Orders</h2><div id="ordersBox" class="ordersBox">No orders yet.</div>
+</section>
 
-    <section class="gallery section">
-      <div class="section-title"><div><span class="eyebrow">OUR BUSINESS</span><h2>Shop &amp; Product Gallery</h2></div></div>
-      <div class="gallery-grid">
-        <img src="assets/shop.png" alt="Shri Panchanan shop">
-        <img src="assets/spices-1.jpg" alt="Spices">
-        <img src="assets/spices-2.jpg" alt="Spice products">
-        <img src="assets/spices-3.jpg" alt="Dry powders and masalas">
-        <img src="assets/spices-4.jpg" alt="Indian spices">
-        <img src="assets/honeycomb.png" alt="Natural honeycomb">
-        <img src="assets/honey-process.png" alt="Honey collection">
-        <img src="assets/fresh-produce.jpg" alt="Fresh produce">
-      </div>
-    </section>
+<section id="contact" class="section contact">
+<h2>Contact Shri Panchanan Pvt Ltd</h2><p>Manufacturing & Food Products</p><p>📍 Bhanjanagara, Badakodonda, Thakurani Sahi, Sethi House, 1st Floor</p><p>📞 7756039746</p>
+<a class="wa" href="https://wa.me/917756039746" target="_blank">💬 WhatsApp Order</a>
+</section>
+</main>
 
-    <section class="section business-info">
-      <span class="eyebrow">VISIT &amp; CONTACT</span><h2>Our Shop</h2>
-      <p><b>Shri Panchanan Pvt Ltd</b><br>
-      Manufacturing &amp; Food Products</p>
-      <p>📍 Bhanjanagara, Badakodonda, Thakurani Sahi, Sethi House, 1st Floor</p>
-      <div class="contact-actions">
-        <a class="call" href="tel:+917756039746">📞 Call Shop</a>
-        <a class="whatsapp" href="https://wa.me/917756039746" target="_blank" rel="noopener">💬 WhatsApp</a>
-      </div>
-    </section>
-
-    <section class="section orders" id="orders">
-      <div class="section-title"><div><span class="eyebrow">ACCOUNT</span><h2>My Orders</h2></div></div>
-      <div id="orderList" class="empty">Your orders will appear here after checkout.</div>
-    </section>
-
-    <section class="contact section" id="contact">
-      <span class="eyebrow">NEED HELP?</span><h2>Shri Panchanan Pvt Ltd</h2>
-      <p>For product enquiries and orders, contact us directly.</p>
-      <p>📞 <a class="phone-link" href="tel:+917756039746">7756039746</a></p>
-      <a class="whatsapp" id="waLink" target="_blank" rel="noopener">WhatsApp Order →</a>
-    </section>
-  <section class="section" id="orders"><span class="eyebrow">ACCOUNT</span><h2>My Orders</h2><div id="orderList" class="empty">No orders yet.</div></section>
-<section class="contact section" id="contact"><span class="eyebrow">CONTACT</span><h2>Shri Panchanan Pvt Ltd</h2><p>📍 Bhanjanagara, Badakodonda, Thakurani Sahi, Sethi House, 1st Floor</p><p>📞 <a href="tel:+917756039746">7756039746</a></p><a class="whatsapp" href="https://wa.me/917756039746" target="_blank">💬 WhatsApp</a></section></main>
-
-  <div class="modal" id="cartModal">
-    <div class="sheet">
-      <div class="sheet-head"><h2>Your Cart</h2><button class="icon-btn" id="closeCart">×</button></div>
-      <div id="cartItems"></div>
-      <div class="checkout" id="checkout">
-        <div class="total"><span>Total</span><strong id="cartTotal">₹0</strong></div>
-        <h3>Delivery details</h3>
-        <input id="custName" placeholder="Full name">
-        <input id="custPhone" inputmode="tel" placeholder="Mobile number">
-        <textarea id="custAddress" placeholder="Complete delivery address"></textarea>
-        <select id="payment">
-          <option value="cod">Cash on Delivery</option>
-          <option value="upi">UPI / Advance Payment</option>
-        </select>
-        <button class="primary wide" id="placeOrder">Place Order</button>
-        <small class="note">UPI option records your payment preference. Connect a verified payment gateway before accepting live online payments.</small>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast"></div>
-  <script src="app.js"></script>
-<div class="modal" id="productModal"><div class="sheet"><button class="close" onclick="closeProduct()">×</button><div id="productDetail"></div></div></div>
-<script>window.PRODUCTS=[{"id":1,"name":"Turmeric Powder","cat":"Spices","price":120,"icon":"🌿"},{"id":2,"name":"Red Chilli Powder","cat":"Spices","price":180,"icon":"🌶️"},{"id":3,"name":"Coriander Powder","cat":"Spices","price":140,"icon":"🌱"},{"id":4,"name":"Garam Masala","cat":"Spices","price":260,"icon":"🫚"},{"id":5,"name":"Wheat Flour","cat":"Flour","price":55,"icon":"🌾"},{"id":6,"name":"Premium Rice","cat":"Rice","price":70,"icon":"🍚"}];</script></body>
-</html>
+<div id="overlay" class="overlay" onclick="closeCart()"></div>
+<aside id="cart" class="cart">
+<div class="cartHead"><h2>Your Cart</h2><button onclick="closeCart()">×</button></div>
+<div id="cartItems"></div>
+<div class="total"><span>Total</span><b id="cartTotal">₹0</b></div>
+<div class="checkout"><h3>Delivery details</h3><input id="name" placeholder="Full name"><input id="phone" placeholder="Mobile number" inputmode="numeric"><textarea id="address" placeholder="Full delivery address"></textarea>
+<select id="payment"><option>Cash on Delivery</option><option>UPI (payment preference)</option></select>
+<button class="primary full" onclick="placeOrder()">Place Order</button>
+<p class="tiny">UPI is recorded as a preference. Connect a verified payment gateway before accepting live online payments.</p></div>
+</aside>
+<footer>© 2026 Shri Panchanan Pvt Ltd • Quality • Trust • Delivery</footer>
+<script src="script.js"></script>
+</body></html>
