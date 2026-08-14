@@ -24,6 +24,7 @@
   <div class="scrim" id="scrim"></div>
 
   <main id="home">
+<section class="pro-hero"><div><span>SHRI PANCHANAN PVT LTD</span><h1>Shop quality products<br><em>delivered to your door.</em></h1><p>Spices, flour and rice with convenient home delivery.</p><button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now →</button></div><img src="assets/shop.png" alt="Shri Panchanan shop"></section>
     <section class="hero">
       <div><span class="eyebrow">SHRI PANCHANAN PVT LTD • QUALITY • TRUST • DELIVERY</span>
         <h1>Authentic products, <em>delivered home.</em></h1>
@@ -40,6 +41,7 @@
     </section>
 
     <section class="section" id="products">
+<div class="pro-search"><input id="search" placeholder="🔎 Search products"></div>
       <div class="section-title"><div><span class="eyebrow">OUR CATALOG</span><h2>Shop Products</h2></div>
       <input id="search" class="search" placeholder="Search products…" autocomplete="off"></div>
       <div class="chips" id="chips">
@@ -85,7 +87,8 @@
       <p>📞 <a class="phone-link" href="tel:+917756039746">7756039746</a></p>
       <a class="whatsapp" id="waLink" target="_blank" rel="noopener">WhatsApp Order →</a>
     </section>
-  </main>
+  <section class="section" id="orders"><span class="eyebrow">ACCOUNT</span><h2>My Orders</h2><div id="orderList" class="empty">No orders yet.</div></section>
+<section class="contact section" id="contact"><span class="eyebrow">CONTACT</span><h2>Shri Panchanan Pvt Ltd</h2><p>📍 Bhanjanagara, Badakodonda, Thakurani Sahi, Sethi House, 1st Floor</p><p>📞 <a href="tel:+917756039746">7756039746</a></p><a class="whatsapp" href="https://wa.me/917756039746" target="_blank">💬 WhatsApp</a></section></main>
 
   <div class="modal" id="cartModal">
     <div class="sheet">
@@ -109,5 +112,6 @@
 
   <div class="toast" id="toast"></div>
   <script src="app.js"></script>
-</body>
+<div class="modal" id="productModal"><div class="sheet"><button class="close" onclick="closeProduct()">×</button><div id="productDetail"></div></div></div>
+<script>window.PRODUCTS=[{"id":1,"name":"Turmeric Powder","cat":"Spices","price":120,"icon":"🌿"},{"id":2,"name":"Red Chilli Powder","cat":"Spices","price":180,"icon":"🌶️"},{"id":3,"name":"Coriander Powder","cat":"Spices","price":140,"icon":"🌱"},{"id":4,"name":"Garam Masala","cat":"Spices","price":260,"icon":"🫚"},{"id":5,"name":"Wheat Flour","cat":"Flour","price":55,"icon":"🌾"},{"id":6,"name":"Premium Rice","cat":"Rice","price":70,"icon":"🍚"}];</script></body>
 </html>
