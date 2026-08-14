@@ -3,19 +3,7 @@
   "short_name": "Shri Panchanan",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f7f5",
-  "theme_color": "#0f7a3d",
-  "description": "Shri Panchanan Pvt Ltd B2B Business App",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  "background_color": "#f6f7f3",
+  "theme_color": "#123b2a",
+  "description": "Professional shopping and home delivery app"
 }

@@ -1,67 +1,87 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0f7a3d">
-<meta name="description" content="Shri Panchanan Pvt Ltd - B2B food products">
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
-<title>Shri Panchanan Pvt Ltd</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123b2a">
+  <meta name="description" content="Shri Panchanan Pvt Ltd — premium food products and home delivery.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <title>Shri Panchanan Pvt Ltd</title>
 </head>
 <body>
-<header class="topbar">
-  <div class="brand"><div class="logo">SP</div><div><b>Shri Panchanan</b><small>Pvt Ltd • Odisha</small></div></div>
-  <button id="installBtn" class="install" hidden>Install App</button>
-</header>
+  <header class="topbar">
+    <button class="icon-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    <div class="brand"><span class="brand-mark">SP</span><div><b>Shri Panchanan</b><small>Pvt Ltd</small></div></div>
+    <button class="cart-btn" id="cartBtn" aria-label="Cart">🛒 <span id="cartCount">0</span></button>
+  </header>
 
-<main>
-<section class="hero">
-  <span class="pill">B2B • Wholesale • Supply</span>
-  <h1>Quality food products from Odisha.</h1>
-  <p>Bulk supply of spices, flour and rice for retailers, wholesalers and business buyers.</p>
-  <div class="actions">
-    <a class="btn primary" href="#products">View Products</a>
-    <a class="btn ghost" id="heroWhatsApp">WhatsApp</a>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head"><b>Shri Panchanan</b><button class="icon-btn" id="closeMenu">×</button></div>
+    <button data-scroll="home">Home</button><button data-scroll="products">Products</button>
+    <button data-scroll="orders">My Orders</button><button data-scroll="contact">Contact</button>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main id="home">
+    <section class="hero">
+      <div><span class="eyebrow">QUALITY • TRUST • DELIVERY</span>
+        <h1>Authentic products, <em>delivered home.</em></h1>
+        <p>Shop premium spices, flour and rice from Shri Panchanan Pvt Ltd.</p>
+        <button class="primary" data-scroll="products">Shop Now →</button>
+      </div>
+      <div class="hero-card"><span>Fresh &amp; Trusted</span><strong>From our business<br>to your doorstep.</strong><small>Home delivery available</small></div>
+    </section>
+
+    <section class="features">
+      <div>🚚<b>Home Delivery</b><small>Convenient doorstep service</small></div>
+      <div>🔒<b>Secure Checkout</b><small>Safe payment options</small></div>
+      <div>📦<b>Quality Products</b><small>Carefully packed</small></div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="section-title"><div><span class="eyebrow">OUR CATALOG</span><h2>Shop Products</h2></div>
+      <input id="search" class="search" placeholder="Search products…" autocomplete="off"></div>
+      <div class="chips" id="chips">
+        <button class="chip active" data-cat="All">All</button><button class="chip" data-cat="Spices">Spices</button>
+        <button class="chip" data-cat="Flour">Flour</button><button class="chip" data-cat="Rice">Rice</button>
+      </div>
+      <div class="grid" id="productGrid"></div>
+    </section>
+
+    <section class="section orders" id="orders">
+      <div class="section-title"><div><span class="eyebrow">ACCOUNT</span><h2>My Orders</h2></div></div>
+      <div id="orderList" class="empty">Your orders will appear here after checkout.</div>
+    </section>
+
+    <section class="contact section" id="contact">
+      <span class="eyebrow">NEED HELP?</span><h2>Shri Panchanan Pvt Ltd</h2>
+      <p>For product enquiries and orders, contact us directly.</p>
+      <a class="whatsapp" id="waLink" target="_blank" rel="noopener">WhatsApp Order →</a>
+    </section>
+  </main>
+
+  <div class="modal" id="cartModal">
+    <div class="sheet">
+      <div class="sheet-head"><h2>Your Cart</h2><button class="icon-btn" id="closeCart">×</button></div>
+      <div id="cartItems"></div>
+      <div class="checkout" id="checkout">
+        <div class="total"><span>Total</span><strong id="cartTotal">₹0</strong></div>
+        <h3>Delivery details</h3>
+        <input id="custName" placeholder="Full name">
+        <input id="custPhone" inputmode="tel" placeholder="Mobile number">
+        <textarea id="custAddress" placeholder="Complete delivery address"></textarea>
+        <select id="payment">
+          <option value="cod">Cash on Delivery</option>
+          <option value="upi">UPI / Advance Payment</option>
+        </select>
+        <button class="primary wide" id="placeOrder">Place Order</button>
+        <small class="note">UPI option records your payment preference. Connect a verified payment gateway before accepting live online payments.</small>
+      </div>
+    </div>
   </div>
-</section>
 
-<section id="products" class="section">
-  <div class="section-head"><h2>Products</h2><span>Bulk orders welcome</span></div>
-  <div id="productGrid" class="grid"></div>
-</section>
-
-<section class="order section">
-  <div>
-    <span class="pill">B2B Inquiry</span>
-    <h2>Need a bulk quotation?</h2>
-    <p>Send your product, quantity and buyer details. We’ll prepare the inquiry message for WhatsApp.</p>
-  </div>
-  <form id="orderForm">
-    <input id="buyer" placeholder="Your name / company" required>
-    <input id="phone" placeholder="Phone / WhatsApp number" required>
-    <select id="product"></select>
-    <input id="qty" placeholder="Quantity (e.g. 500 kg)" required>
-    <textarea id="note" placeholder="Additional requirements"></textarea>
-    <button class="btn primary" type="submit">Send B2B Inquiry on WhatsApp</button>
-  </form>
-</section>
-
-<section class="section about">
-  <span class="pill">Company</span>
-  <h2>Shri Panchanan Pvt Ltd</h2>
-  <p>Manufacturing & food products business based in Odisha, focused on professional B2B supply and buyer partnerships.</p>
-  <div class="contact">
-    <a href="mailto:shripanchananpvtltt@gmail.com">✉ shripanchananpvtltt@gmail.com</a>
-    <a href="tel:+917756039746">☎ +91 77560 39746</a>
-  </div>
-</section>
-</main>
-
-<footer>© 2026 Shri Panchanan Pvt Ltd • B2B Business App</footer>
-<script src="app.js"></script>
-<script>
-if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
-</script>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
 </body>
 </html>
