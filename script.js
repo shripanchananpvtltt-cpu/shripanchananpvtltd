@@ -13,6 +13,11 @@ let cat = "All";
 
 const money = n => "₹" + Number(n).toLocaleString("en-IN");
 
+// Escape user-provided strings before inserting into innerHTML to avoid XSS
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]);
+}
+
 function setCat(c, btn) {
   cat = c;
   document.querySelectorAll(".chips button").forEach(b => b.classList.remove("active"));
@@ -239,16 +244,16 @@ function renderOrders() {
 
   box.innerHTML = orders.map(order => `
     <div class="orderCard">
-      <h3>Order #${order.id}</h3>
-      <p><b>Date:</b> ${order.date}</p>
-      <p><b>Name:</b> ${order.customer.name}</p>
-      <p><b>Phone:</b> ${order.customer.phone}</p>
-      <p><b>Status:</b> ${order.status}</p>
-      <p><b>Payment:</b> ${order.payment}</p>
+      <h3>Order #${escapeHtml(order.id)}</h3>
+      <p><b>Date:</b> ${escapeHtml(order.date)}</p>
+      <p><b>Name:</b> ${escapeHtml(order.customer.name)}</p>
+      <p><b>Phone:</b> ${escapeHtml(order.customer.phone)}</p>
+      <p><b>Status:</b> ${escapeHtml(order.status)}</p>
+      <p><b>Payment:</b> ${escapeHtml(order.payment)}</p>
 
       ${order.items.map(item => `
         <div>
-          ${item.name} × ${item.qty} = ${money(item.amount)}
+          ${escapeHtml(item.name)} × ${item.qty} = ${money(item.amount)}
         </div>
       `).join("")}
 
