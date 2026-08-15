@@ -1,13 +1,11 @@
 {
   "name": "Shri Panchanan Pvt Ltd",
   "short_name": "Shri Panchanan",
-  "description": "Shri Panchanan Pvt Ltd - Spices, flour and rice.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f7f8fa",
+  "background_color": "#ffffff",
   "theme_color": "#111111",
-  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "icons/icon-192.png",
