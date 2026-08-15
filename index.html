@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Shri Panchanan Pvt Ltd | V4</title>
 <meta name="description" content="Shri Panchanan Pvt Ltd - Spices, flour and rice.">
+<meta name="theme-color" content="#111111">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,7 +21,8 @@
 <section id="home" class="hero">
   <div><span class="pill">QUALITY • TRUST • DELIVERY</span><h1>Shop quality products<br>delivered to your door.</h1>
   <p>Premium spices, flour and rice with convenient home delivery.</p>
-  <button class="primary" onclick="document.querySelector('#products').scrollIntoView({behavior:'smooth'})">Shop Now →</button></div>
+  <button class="primary" onclick="document.querySelector('#products').scrollIntoView({behavior:'smooth'})">Shop Now →</button>
+  <button id="installBtn" class="primary" style="display:none;margin-top:10px">📲 Install App</button></div>
   <div class="heroCard"><div class="heroEmoji">🌾</div><b>Fresh • Carefully packed</b><span>Direct order from Shri Panchanan Pvt Ltd</span></div>
 </section>
 
@@ -51,6 +55,31 @@
 <p class="tiny">UPI is recorded as a preference. Connect a verified payment gateway before accepting live online payments.</p>
 </div>
 </aside>
+
 <footer>© 2026 Shri Panchanan Pvt Ltd • Quality • Trust • Delivery</footer>
+
 <script src="script.js"></script>
-</body></html>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("./service-worker.js");
+  });
+}
+let deferredPrompt = null;
+window.addEventListener("beforeinstallprompt", function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById("installBtn");
+  if (btn) btn.style.display = "inline-block";
+});
+document.addEventListener("click", async function(e) {
+  if (e.target && e.target.id === "installBtn" && deferredPrompt) {
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    e.target.style.display = "none";
+  }
+});
+</script>
+</body>
+</html>

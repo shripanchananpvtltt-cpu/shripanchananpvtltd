@@ -20,13 +20,14 @@ function setCat(c, btn) {
   renderProducts();
 }
 
-function productImage(p) {
-  return '<img class="productImg" src="' + p.image + '" alt="' + p.name + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'"><span class="imageFallback" style="display:none">' + p.emoji + '</span>';
+function productImage(p, cls = "productImg") {
+  return `<img class="${cls}" src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="imageFallback" style="display:none">${p.emoji}</span>`;
 }
 
 function renderProducts() {
   const grid = document.getElementById("productGrid");
   if (!grid) return;
+
   const search = document.getElementById("search");
   const q = search ? search.value.toLowerCase().trim() : "";
 
@@ -34,6 +35,11 @@ function renderProducts() {
     (cat === "All" || p.cat === cat) &&
     p.name.toLowerCase().includes(q)
   );
+
+  if (!list.length) {
+    grid.innerHTML = `<div class="muted">No products found.</div>`;
+    return;
+  }
 
   grid.innerHTML = list.map(p => `
     <article class="product">
@@ -63,8 +69,10 @@ function add(id) {
 function change(id, amount) {
   const item = cart.find(x => x.id === id);
   if (!item) return;
+
   item.qty += amount;
   if (item.qty <= 0) cart = cart.filter(x => x.id !== id);
+
   save();
   renderCart();
 }
@@ -79,12 +87,13 @@ function renderCart() {
   const count = document.getElementById("cartCount");
   const box = document.getElementById("cartItems");
   const totalBox = document.getElementById("cartTotal");
+
   if (!count || !box || !totalBox) return;
 
   count.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
 
   if (!cart.length) {
-    box.innerHTML = '<p class="muted">Your cart is empty.</p>';
+    box.innerHTML = `<p class="muted">Your cart is empty.</p>`;
     totalBox.textContent = "₹0";
     return;
   }
@@ -100,19 +109,21 @@ function renderCart() {
 
     return `
       <div class="cartItem">
-        <div class="thumb">
-          <img class="cartImg" src="${p.image}" alt="${p.name}">
-        </div>
+        <div class="thumb">${productImage(p, "cartImg")}</div>
+
         <div class="cartInfo">
           <b>${p.name}</b>
           <span>${money(p.price)} / kg</span>
+
           <div class="qty">
             <button onclick="change(${p.id},-1)">−</button>
             <strong>${item.qty}</strong>
             <button onclick="change(${p.id},1)">+</button>
           </div>
+
           <button class="remove" onclick="removeItem(${p.id})">Remove</button>
         </div>
+
         <strong class="itemTotal">${money(amount)}</strong>
       </div>
     `;
@@ -124,14 +135,17 @@ function renderCart() {
 function openCart() {
   const cartBox = document.getElementById("cart");
   const overlay = document.getElementById("overlay");
+
   if (cartBox) cartBox.classList.add("open");
   if (overlay) overlay.classList.add("show");
+
   renderCart();
 }
 
 function closeCart() {
   const cartBox = document.getElementById("cart");
   const overlay = document.getElementById("overlay");
+
   if (cartBox) cartBox.classList.remove("open");
   if (overlay) overlay.classList.remove("show");
 }
@@ -152,8 +166,18 @@ function placeOrder() {
     return;
   }
 
-  if (!name.value.trim() || !phone.value.trim() || !address.value.trim()) {
-    alert("Please fill all delivery details.");
+  if (!name.value.trim()) {
+    alert("Please enter your name.");
+    return;
+  }
+
+  if (!phone.value.trim()) {
+    alert("Please enter your mobile number.");
+    return;
+  }
+
+  if (!address.value.trim()) {
+    alert("Please enter your address.");
     return;
   }
 
@@ -162,9 +186,17 @@ function placeOrder() {
   const items = cart.map(item => {
     const p = products.find(x => x.id === item.id);
     if (!p) return null;
+
     const amount = p.price * item.qty;
     total += amount;
-    return {id:p.id,name:p.name,qty:item.qty,price:p.price,amount:amount};
+
+    return {
+      id:p.id,
+      name:p.name,
+      qty:item.qty,
+      price:p.price,
+      amount:amount
+    };
   }).filter(Boolean);
 
   const order = {
@@ -175,7 +207,7 @@ function placeOrder() {
       phone:phone.value.trim(),
       address:address.value.trim()
     },
-    payment:payment ? payment.value : "Cash on Delivery",
+    payment:payment ? payment.value : "COD",
     items:items,
     total:total,
     status:"Order Received"
@@ -183,14 +215,16 @@ function placeOrder() {
 
   orders.unshift(order);
   cart = [];
+
   save();
   renderCart();
+  renderOrders();
 
   name.value = "";
   phone.value = "";
   address.value = "";
 
-  alert("Order placed successfully!\nOrder ID: " + order.id);
+  alert("Order placed successfully!\n\nOrder ID: " + order.id);
   closeCart();
 }
 
@@ -199,7 +233,7 @@ function renderOrders() {
   if (!box) return;
 
   if (!orders.length) {
-    box.innerHTML = '<p class="muted">No orders yet.</p>';
+    box.innerHTML = `<p class="muted">No orders yet.</p>`;
     return;
   }
 
@@ -211,15 +245,26 @@ function renderOrders() {
       <p><b>Phone:</b> ${order.customer.phone}</p>
       <p><b>Status:</b> ${order.status}</p>
       <p><b>Payment:</b> ${order.payment}</p>
-      ${order.items.map(item => `<div>${item.name} × ${item.qty} = ${money(item.amount)}</div>`).join("")}
-      <p><strong>Total: ${money(order.total)}</strong></p>
+
+      ${order.items.map(item => `
+        <div>
+          ${item.name} × ${item.qty} = ${money(item.amount)}
+        </div>
+      `).join("")}
+
+      <br>
+      <strong>Total: ${money(order.total)}</strong>
     </div>
   `).join("");
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
   const search = document.getElementById("search");
-  if (search) search.addEventListener("input", renderProducts);
+
+  if (search) {
+    search.addEventListener("input", renderProducts);
+  }
+
   renderProducts();
   renderCart();
   renderOrders();
