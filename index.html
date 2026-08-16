@@ -108,37 +108,44 @@
 <!-- Load the existing app logic exactly once -->
 <script src="script.js"></script>
 
-<!-- PWA registration exactly once -->
 <script>
-(function () {
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("./sw.js").catch(function (error) {
-        console.log("PWA registration failed:", error);
-      });
-    });
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const btn = document.getElementById("installBtn");
+
+  if (btn) {
+    btn.style.display = "inline-block";
+
+    btn.onclick = async () => {
+      if (!deferredPrompt) return;
+
+      deferredPrompt.prompt();
+
+      await deferredPrompt.userChoice;
+
+      deferredPrompt = null;
+      btn.style.display = "none";
+    };
   }
+});
 
-  var deferredPrompt = null;
+window.addEventListener("appinstalled", () => {
+  const btn = document.getElementById("installBtn");
 
-  window.addEventListener("beforeinstallprompt", function (event) {
-    event.preventDefault();
-    deferredPrompt = event;
+  if (btn) {
+    btn.style.display = "none";
+  }
+});
 
-    var button = document.getElementById("installBtn");
-    if (button) button.style.display = "inline-block";
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js");
   });
-
-  document.addEventListener("click", async function (event) {
-    if (!event.target || event.target.id !== "installBtn" || !deferredPrompt) return;
-
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-
-    deferredPrompt = null;
-    event.target.style.display = "none";
-  });
-})();
+}
 </script>
 
 </body>
