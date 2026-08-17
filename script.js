@@ -8,7 +8,20 @@ const products = [
 ];
 
 const WHATSAPP_NUMBER = "917756039746";
-const DELIVERY_CHARGE = 0;
+const DELIVERY_CHARGE = 30;
+
+function getDeliveryCharge() {
+  return cart && cart.length > 0 ? DELIVERY_CHARGE : 0;
+}
+
+function getGrandTotal() {
+  const subtotal = cart.reduce(
+    (total, item) => total + (Number(item.price) * Number(item.qty)),
+    0
+  );
+
+  return subtotal + getDeliveryCharge();
+}
 
 let cart = JSON.parse(localStorage.getItem("sp_cart") || "[]");
 let orders = JSON.parse(localStorage.getItem("sp_orders") || "[]");
@@ -481,7 +494,30 @@ function renderOrders() {
           <b>Phone:</b>
           ${escapeHtml(order.customer.phone)}
         </p>
+const subtotal = cart.reduce(
+  (total, item) => total + (Number(item.price) * Number(item.qty)),
+  0
+);
 
+const delivery = cart.length > 0 ? 30 : 0;
+const grandTotal = subtotal + delivery;
+
+summary.innerHTML = `
+  <div class="summary-row">
+    <span>Subtotal</span>
+    <strong>₹${subtotal}</strong>
+  </div>
+
+  <div class="summary-row">
+    <span>Delivery Charge</span>
+    <strong>₹${delivery}</strong>
+  </div>
+
+  <div class="summary-row total">
+    <span>Grand Total</span>
+    <strong>₹${grandTotal}</strong>
+  </div>
+`;
         <p>
           <b>Status:</b>
           ${escapeHtml(order.status)}
@@ -500,25 +536,6 @@ function renderOrders() {
         <hr>
 
         <p>
-          Subtotal:
-          <b>${money(order.subtotal || order.total)}</b>
-        </p>
-
-        <p>
-          Delivery:
-          <b>
-            ${
-              order.delivery === 0
-              ? "FREE"
-              : money(order.delivery || 0)
-            }
-          </b>
-        </p>
-
-        <strong>
-          Grand Total:
-          ${money(order.total)}
-        </strong>
 
       </div>
     `;
