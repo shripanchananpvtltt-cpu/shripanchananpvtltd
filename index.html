@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Shri Panchanan Pvt Ltd | V4</title>
+<title>Shri Panchanan Pvt Ltd | V5</title>
 <meta name="description" content="Shri Panchanan Pvt Ltd - Spices, flour and rice.">
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="manifest.json">
@@ -40,7 +40,7 @@
 </section>
 
 <section class="features">
-  <div>🚚<b>Home Delivery</b><span>Doorstep service</span></div>
+  <div>🚚<b>Home Delivery</b><span>₹30 per km</span></div>
   <div>🔒<b>Secure Checkout</b><span>Safe order process</span></div>
   <div>📦<b>Quality Products</b><span>Carefully packed</span></div>
 </section>
@@ -92,65 +92,29 @@
   <div class="checkout">
     <h3>Delivery details</h3>
     <input id="name" placeholder="Full name">
+    <input id="phone" type="tel" pattern="[6-9]\d{9}" placeholder="Mobile number" required>
+    <textarea id="address" placeholder="Full delivery address" rows="4"></textarea>
 
-<input
-  id="phone"
-  type="tel"
-  pattern="[6-9]\d{9}"
-  placeholder="Mobile number"
-  required
->
+    <button type="button" class="primary full" onclick="calculateDelivery()">
+      📍 Calculate Delivery Charge
+    </button>
 
-<textarea
-  id="address"
-  placeholder="Full delivery address"
-  rows="4"
-></textarea>
+    <div id="deliveryStatus" style="margin:8px 0;padding:10px;border-radius:8px;background:#f5f5f5;font-size:14px">
+      Enter your complete delivery address.
+    </div>
 
-<button
-  type="button"
-  class="primary full"
-  onclick="calculateDelivery()"
-  style="margin:8px 0"
->
-  📍 Calculate Delivery Charge
-</button>
-
-<div
-  id="deliveryStatus"
-  style="
-    margin:8px 0;
-    padding:10px;
-    border-radius:8px;
-    background:#f5f5f5;
-    font-size:14px;
-  "
->
-  Enter your complete delivery address.
-</div>
-
-<select id="payment">
-  <option>Cash on Delivery</option>
-  <option>UPI (payment preference)</option>
-</select>
-
-<button
-  class="primary full"
-  onclick="placeOrder()"
->
-  Place Order
-</button>
+    <select id="payment">
       <option>Cash on Delivery</option>
       <option>UPI (payment preference)</option>
     </select>
+
     <button class="primary full" onclick="placeOrder()">Place Order</button>
-    <p class="tiny">UPI is recorded as a preference. Connect a verified payment gateway before accepting live online payments.</p>
+    <p class="tiny">Delivery is calculated from the shop location to the customer address at ₹30/km. Online UPI payment is not processed by this page.</p>
   </div>
 </aside>
 
 <footer>© 2026 Shri Panchanan Pvt Ltd • Quality • Trust • Delivery</footer>
 
-<!-- Load the existing app logic exactly once -->
 <script src="script.js"></script>
 
 <script>
@@ -159,19 +123,13 @@ let deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
-
   const btn = document.getElementById("installBtn");
-
   if (btn) {
     btn.style.display = "inline-block";
-
     btn.onclick = async () => {
       if (!deferredPrompt) return;
-
       deferredPrompt.prompt();
-
       await deferredPrompt.userChoice;
-
       deferredPrompt = null;
       btn.style.display = "none";
     };
@@ -180,15 +138,12 @@ window.addEventListener("beforeinstallprompt", (e) => {
 
 window.addEventListener("appinstalled", () => {
   const btn = document.getElementById("installBtn");
-
-  if (btn) {
-    btn.style.display = "none";
-  }
+  if (btn) btn.style.display = "none";
 });
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js");
+    navigator.serviceWorker.register("./sw.js").catch(console.error);
   });
 }
 </script>
