@@ -8,13 +8,28 @@ const products = [
 ];
 
 const WHATSAPP_NUMBER = "917756039746";
-const DELIVERY_CHARGE = 30;
+const DELIVERY_CHARGE_PER_KM = 30;
+
+// Shri Panchanan Pvt Ltd delivery starting point
+// Bhanjanagara, Badakodonda, Thakurani Sahi
+const SHOP_LAT = 19.9277;
+const SHOP_LON = 84.5828;
+
+let deliveryDistanceKm = 0;
+let deliveryCharge = 0;
+let deliveryCalculated = false;
 
 function getDeliveryCharge() {
-  return cart && cart.length > 0 ? DELIVERY_CHARGE : 0;
+  return deliveryCalculated
+    ? deliveryCharge
+    : 0;
 }
 
 function getGrandTotal() {
+  return getCartSubtotal() + getDeliveryCharge();
+}
+
+fDELIVERY_CHARGEunction getGrandTotal() {
   const subtotal = cart.reduce(
     (total, item) => total + (Number(item.price) * Number(item.qty)),
     0
@@ -555,3 +570,149 @@ document.addEventListener("DOMContentLoaded", () => {
   renderOrders();
 
 });
+async function calculateDelivery() {
+
+  const addressEl = document.getElementById("address");
+  const statusEl = document.getElementById("deliveryStatus");
+
+  if (!addressEl || !statusEl) return;
+
+  const address = addressEl.value.trim();
+
+  if (address.length < 10) {
+    statusEl.innerHTML =
+      "❌ Please enter your complete delivery address.";
+
+    deliveryCalculated = false;
+    deliveryDistanceKm = 0;
+    deliveryCharge = 0;
+
+    renderCart();
+    return;
+  }
+
+  statusEl.innerHTML =
+    "⏳ Calculating delivery distance...";
+
+  try {
+
+    // Address → coordinates
+    const geocodeUrl =
+      "https://nominatim.openstreetmap.org/search?" +
+      new URLSearchParams({
+        format: "jsonv2",
+        limit: "1",
+        countrycodes: "in",
+        q: address
+      });
+
+    const geoResponse =
+      await fetch(geocodeUrl);
+
+    if (!geoResponse.ok) {
+      throw new Error("Geocoding failed");
+    }
+
+    const geoData =
+      await geoResponse.json();
+
+    if (!geoData.length) {
+      throw new Error(
+        "Address could not be found"
+      );
+    }
+
+    const customerLat =
+      Number(geoData[0].lat);
+
+    const customerLon =
+      Number(geoData[0].lon);
+
+    // Shop → Customer driving route
+    const routeUrl =
+      `https://router.project-osrm.org/route/v1/driving/` +
+      `${SHOP_LON},${SHOP_LAT};` +
+      `${customerLon},${customerLat}` +
+      `?overview=false`;
+
+    const routeResponse =
+      await fetch(routeUrl);
+
+    if (!routeResponse.ok) {
+      throw new Error("Routing failed");
+    }
+
+    const routeData =
+      await routeResponse.json();
+
+    if (
+      routeData.code !== "Ok" ||
+      !routeData.routes ||
+      !routeData.routes.length
+    ) {
+      throw new Error(
+        "Driving route not found"
+      );
+    }
+
+    // OSRM gives meters
+    const meters =
+      Number(routeData.routes[0].distance);
+
+    // Convert to KM
+    const km =
+      meters / 1000;
+
+    // Round to 1 decimal
+    deliveryDistanceKm =
+      Math.ceil(km * 10) / 10;
+
+    deliveryCharge =
+      Math.ceil(
+        deliveryDistanceKm *
+        DELIVERY_CHARGE_PER_KM
+      );
+
+    deliveryCalculated = true;
+
+    statusEl.innerHTML = `
+      <div>
+        📍 Delivery distance:
+        <strong>${deliveryDistanceKm.toFixed(1)} km</strong>
+      </div>
+
+      <div style="margin-top:5px">
+        🚚 Delivery charge:
+        <strong>${money(deliveryCharge)}</strong>
+      </div>
+
+      <div style="margin-top:5px;font-size:12px">
+        ₹${DELIVERY_CHARGE_PER_KM}/km
+      </div>
+
+      <div style="
+        margin-top:8px;
+        font-size:11px;
+        color:#777;
+      ">
+        Distance calculated using OpenStreetMap routing.
+      </div>
+    `;
+
+    renderCart();
+
+  } catch (error) {
+
+    console.error(error);
+
+    deliveryCalculated = false;
+    deliveryDistanceKm = 0;
+    deliveryCharge = 0;
+
+    statusEl.innerHTML =
+      "❌ Delivery distance could not be calculated. " +
+      "Please check the address and try again.";
+
+    renderCart();
+  }
+}
