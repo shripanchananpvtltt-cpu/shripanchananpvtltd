@@ -92,9 +92,54 @@
   <div class="checkout">
     <h3>Delivery details</h3>
     <input id="name" placeholder="Full name">
-    <input id="phone" type="tel" pattern="[6-9]\d{9}" placeholder="Mobile number" required>
-    <textarea id="address" placeholder="Full delivery address"></textarea>
-    <select id="payment">
+
+<input
+  id="phone"
+  type="tel"
+  pattern="[6-9]\d{9}"
+  placeholder="Mobile number"
+  required
+>
+
+<textarea
+  id="address"
+  placeholder="Full delivery address"
+  rows="4"
+></textarea>
+
+<button
+  type="button"
+  class="primary full"
+  onclick="calculateDelivery()"
+  style="margin:8px 0"
+>
+  📍 Calculate Delivery Charge
+</button>
+
+<div
+  id="deliveryStatus"
+  style="
+    margin:8px 0;
+    padding:10px;
+    border-radius:8px;
+    background:#f5f5f5;
+    font-size:14px;
+  "
+>
+  Enter your complete delivery address.
+</div>
+
+<select id="payment">
+  <option>Cash on Delivery</option>
+  <option>UPI (payment preference)</option>
+</select>
+
+<button
+  class="primary full"
+  onclick="placeOrder()"
+>
+  Place Order
+</button>
       <option>Cash on Delivery</option>
       <option>UPI (payment preference)</option>
     </select>
