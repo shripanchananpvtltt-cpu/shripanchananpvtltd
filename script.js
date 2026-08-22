@@ -9,7 +9,11 @@ const products = [
 
 const WHATSAPP_NUMBER = "917756039746";
 const DELIVERY_CHARGE_PER_KM = 30;
+Delivery Distance:
+${Number(order.distanceKm).toFixed(1)} km
 
+Delivery Charge:
+${money(order.delivery)}
 // Shri Panchanan Pvt Ltd delivery starting point
 // Bhanjanagara, Badakodonda, Thakurani Sahi
 const SHOP_LAT = 19.9277;
@@ -716,3 +720,33 @@ async function calculateDelivery() {
     renderCart();
   }
 }
+const delivery =
+  cart.length > 0 && deliveryCalculated
+    ? deliveryCharge
+    : 0;
+
+const grandTotal =
+  subtotal + delivery;
+<span>
+  Delivery
+  ${
+    deliveryCalculated
+      ? `(${deliveryDistanceKm.toFixed(1)} km × ₹30)`
+      : ""
+  }
+</span>
+if (!deliveryCalculated) {
+  alert(
+    "Please calculate the delivery charge before placing your order."
+  );
+
+  calculateDelivery();
+  return null;
+}
+
+const delivery = deliveryCharge;
+distanceKm: deliveryDistanceKm,
+deliveryPerKm: DELIVERY_CHARGE_PER_KM,
+delivery: delivery,
+total: subtotal + delivery,
+  
